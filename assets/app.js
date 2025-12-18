@@ -86,7 +86,12 @@ function applyFilters() {
     filters.push((data) => data.condition === conditionSelection);
   }
 
-  table.setFilter(filters);
+  if (!filters.length) {
+    table.clearFilter();
+    return;
+  }
+
+  table.setFilter((data) => filters.every((fn) => fn(data)));
 }
 
 function renderTable() {
@@ -163,6 +168,10 @@ async function loadData() {
       fetch("data/prices.latest.json"),
       fetch("data/diffs/latest.json"),
     ]);
+
+    if (!pricingResponse.ok || !diffResponse.ok) {
+      throw new Error("One or more pricing endpoints returned an error response.");
+    }
 
     const pricingJson = await pricingResponse.json();
     const diffJson = await diffResponse.json();
