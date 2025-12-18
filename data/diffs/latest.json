@@ -1,0 +1,17 @@
+{
+  "generated_at": "2024-06-05T08:00:00Z",
+  "changes": [
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4o",
+      "description": "Input price reduced from $0.0100 to $0.0050 per 1K tokens.",
+      "source": "https://openai.com/pricing"
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-large",
+      "description": "Added batch pricing tier for throughput-focused workloads.",
+      "source": "https://docs.mistral.ai/platform/pricing/"
+    }
+  ]
+}

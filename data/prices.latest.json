@@ -1,0 +1,38 @@
+{
+  "last_updated": "2024-06-05T00:00:00Z",
+  "prices": [
+    {
+      "provider": "OpenAI",
+      "model": "gpt-4o",
+      "condition": "On-demand",
+      "input": 0.005,
+      "output": 0.015,
+      "unit": "per 1K tokens",
+      "updated": "2024-06-05",
+      "notes": "Latest flagship model with vision support.",
+      "source": "https://openai.com/pricing"
+    },
+    {
+      "provider": "Anthropic",
+      "model": "claude-3-opus",
+      "condition": "On-demand",
+      "input": 0.015,
+      "output": 0.075,
+      "unit": "per 1K tokens",
+      "updated": "2024-05-30",
+      "notes": "High-quality reasoning with longer context.",
+      "source": "https://www.anthropic.com/pricing"
+    },
+    {
+      "provider": "Mistral",
+      "model": "mistral-large",
+      "condition": "Batch",
+      "input": 0.002,
+      "output": 0.006,
+      "unit": "per 1K tokens",
+      "updated": "2024-06-02",
+      "notes": "Discounted batch processing tier.",
+      "source": "https://docs.mistral.ai/platform/pricing/"
+    }
+  ]
+}

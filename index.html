@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LLM Pricing Dashboard</title>
+  <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@5.5.3/dist/css/tabulator.min.css" />
+  <link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+  <header class="page-header">
+    <div>
+      <h1>LLM Pricing Dashboard</h1>
+      <p class="description">Compare LLM pricing details at a glance. Always verify against official sources.</p>
+    </div>
+    <div class="meta">
+      <p class="label">Last updated</p>
+      <p id="lastUpdated" class="value">—</p>
+    </div>
+  </header>
+
+  <section class="controls">
+    <div class="control">
+      <label for="searchInput">Search</label>
+      <input id="searchInput" type="search" placeholder="Search by provider or model" />
+    </div>
+    <div class="control">
+      <label for="modelFilter">Model</label>
+      <select id="modelFilter">
+        <option value="all">All models</option>
+      </select>
+    </div>
+    <div class="control">
+      <label for="conditionFilter">Condition</label>
+      <select id="conditionFilter">
+        <option value="all">All conditions</option>
+      </select>
+    </div>
+  </section>
+
+  <main>
+    <section aria-label="Pricing table">
+      <div id="pricing-table" class="table-container"></div>
+    </section>
+
+    <section aria-label="Changes since yesterday" class="changes">
+      <div class="section-heading">
+        <h2>Changes since yesterday</h2>
+        <p id="changesTimestamp" class="subtle">—</p>
+      </div>
+      <ul id="changesList" class="changes-list"></ul>
+      <p id="changesEmpty" class="empty-message" hidden>No recorded changes for the last day.</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>
+      Disclaimer: Pricing information is provided for convenience only. Always verify final pricing and terms from the official provider documentation.
+    </p>
+  </footer>
+
+  <script src="https://unpkg.com/tabulator-tables@5.5.3/dist/js/tabulator.min.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
