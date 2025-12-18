@@ -11,6 +11,12 @@ const statusMessage = document.getElementById("statusMessage");
 let table;
 let pricingData = [];
 
+function setControlsDisabled(disabled) {
+  [searchInput, modelFilter, conditionFilter].forEach((el) => {
+    el.disabled = disabled;
+  });
+}
+
 function formatCurrency(value) {
   if (value === null || value === undefined || Number.isNaN(Number(value))) return "—";
   const numberValue = Number(value);
@@ -96,37 +102,41 @@ function applyFilters() {
 }
 
 function renderTable() {
-  table = new Tabulator(pricingTableElement, {
-    data: pricingData,
-    layout: "fitColumns",
-    height: 520,
-    placeholder: "No pricing data found.",
-    columns: [
-      { title: "Provider", field: "provider", width: 140 },
-      { title: "Model", field: "model", width: 180 },
-      { title: "Condition", field: "condition", width: 120 },
-      {
-        title: "Input Price",
-        field: "input",
-        formatter: (cell) => `${formatCurrency(cell.getValue())}`,
-        hozAlign: "right",
-      },
-      {
-        title: "Output Price",
-        field: "output",
-        formatter: (cell) => `${formatCurrency(cell.getValue())}`,
-        hozAlign: "right",
-      },
-      { title: "Unit", field: "unit", width: 130 },
-      { title: "Notes", field: "notes", widthGrow: 1 },
-      { title: "Last Updated", field: "updated", formatter: (cell) => formatDate(cell.getValue()) },
-      { title: "Source", field: "source", formatter: linkFormatter, width: 100 },
-    ],
-  });
+  if (table) {
+    table.replaceData(pricingData);
+  } else {
+    table = new Tabulator(pricingTableElement, {
+      data: pricingData,
+      layout: "fitColumns",
+      height: 520,
+      placeholder: "No pricing data found.",
+      columns: [
+        { title: "Provider", field: "provider", width: 140 },
+        { title: "Model", field: "model", width: 180 },
+        { title: "Condition", field: "condition", width: 120 },
+        {
+          title: "Input Price",
+          field: "input",
+          formatter: (cell) => `${formatCurrency(cell.getValue())}`,
+          hozAlign: "right",
+        },
+        {
+          title: "Output Price",
+          field: "output",
+          formatter: (cell) => `${formatCurrency(cell.getValue())}`,
+          hozAlign: "right",
+        },
+        { title: "Unit", field: "unit", width: 130 },
+        { title: "Notes", field: "notes", widthGrow: 1 },
+        { title: "Last Updated", field: "updated", formatter: (cell) => formatDate(cell.getValue()) },
+        { title: "Source", field: "source", formatter: linkFormatter, width: 100 },
+      ],
+    });
 
-  searchInput.addEventListener("input", applyFilters);
-  modelFilter.addEventListener("change", applyFilters);
-  conditionFilter.addEventListener("change", applyFilters);
+    searchInput.addEventListener("input", applyFilters);
+    modelFilter.addEventListener("change", applyFilters);
+    conditionFilter.addEventListener("change", applyFilters);
+  }
 }
 
 function updateLastUpdated(timestamp) {
@@ -190,17 +200,22 @@ async function fetchJson(url) {
 
 async function loadData() {
   try {
+    setStatus("Loading pricing data...");
+    setControlsDisabled(true);
+
     const pricingJson = await fetchJson("data/prices.latest.json");
     pricingData = pricingJson.prices || [];
     buildFilters();
     renderTable();
     applyFilters();
     updateLastUpdated(pricingJson.last_updated || pricingJson.generated_at);
-    setStatus("");
+    setStatus("Pricing data loaded.");
+    setControlsDisabled(false);
   } catch (error) {
     console.error("Failed to load pricing data", error);
     lastUpdatedEl.textContent = "Unable to load data";
     setStatus("Unable to load pricing data right now.", { type: "error" });
+    setControlsDisabled(true);
     return;
   }
 
@@ -212,6 +227,7 @@ async function loadData() {
     changesList.innerHTML = "";
     changesEmpty.textContent = "Unable to load recent change history.";
     changesEmpty.hidden = false;
+    changesTimestamp.textContent = "—";
     setStatus(
       "Pricing data loaded, but the changes feed is temporarily unavailable.",
       { type: "error" }

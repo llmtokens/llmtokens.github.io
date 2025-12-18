@@ -89,6 +89,12 @@ a {
   box-shadow: var(--shadow);
 }
 
+.control input:disabled,
+.control select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 main {
   padding: 12px 32px 48px;
 }
