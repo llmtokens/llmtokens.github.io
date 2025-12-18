@@ -7,17 +7,19 @@
   <link rel="stylesheet" href="https://unpkg.com/tabulator-tables@5.5.3/dist/css/tabulator.min.css" />
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
-<body>
-  <header class="page-header">
-    <div>
-      <h1>LLM Pricing Dashboard</h1>
-      <p class="description">Compare LLM pricing details at a glance. Always verify against official sources.</p>
-    </div>
-    <div class="meta">
-      <p class="label">Last updated</p>
-      <p id="lastUpdated" class="value">—</p>
-    </div>
-  </header>
+  <body>
+    <header class="page-header">
+      <div>
+        <h1>LLM Pricing Dashboard</h1>
+        <p class="description">Compare LLM pricing details at a glance. Always verify against official sources.</p>
+      </div>
+      <div class="meta">
+        <p class="label">Last updated</p>
+        <p id="lastUpdated" class="value">—</p>
+      </div>
+    </header>
+
+    <div id="statusMessage" class="status" role="status" aria-live="polite"></div>
 
   <section class="controls">
     <div class="control">

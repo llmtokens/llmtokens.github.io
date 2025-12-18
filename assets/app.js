@@ -6,6 +6,7 @@ const lastUpdatedEl = document.getElementById("lastUpdated");
 const changesList = document.getElementById("changesList");
 const changesEmpty = document.getElementById("changesEmpty");
 const changesTimestamp = document.getElementById("changesTimestamp");
+const statusMessage = document.getElementById("statusMessage");
 
 let table;
 let pricingData = [];
@@ -137,6 +138,8 @@ function renderChanges(changesPayload) {
   const { changes = [], generated_at: generatedAt } = changesPayload || {};
 
   changesList.innerHTML = "";
+  changesEmpty.textContent = "No recorded changes for the last day.";
+  changesTimestamp.textContent = generatedAt ? `Reported ${formatDate(generatedAt)}` : "—";
 
   if (!changes.length) {
     changesEmpty.hidden = false;
@@ -162,29 +165,57 @@ function renderChanges(changesPayload) {
   }
 }
 
+function setStatus(message, { type = "info" } = {}) {
+  if (!statusMessage) return;
+
+  if (!message) {
+    statusMessage.textContent = "";
+    statusMessage.classList.remove("visible", "error");
+    return;
+  }
+
+  statusMessage.textContent = message;
+  statusMessage.classList.add("visible");
+  statusMessage.classList.toggle("error", type === "error");
+}
+
+async function fetchJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`${url} responded with ${response.status}`);
+  }
+
+  return response.json();
+}
+
 async function loadData() {
   try {
-    const [pricingResponse, diffResponse] = await Promise.all([
-      fetch("data/prices.latest.json"),
-      fetch("data/diffs/latest.json"),
-    ]);
-
-    if (!pricingResponse.ok || !diffResponse.ok) {
-      throw new Error("One or more pricing endpoints returned an error response.");
-    }
-
-    const pricingJson = await pricingResponse.json();
-    const diffJson = await diffResponse.json();
-
+    const pricingJson = await fetchJson("data/prices.latest.json");
     pricingData = pricingJson.prices || [];
     buildFilters();
     renderTable();
     applyFilters();
     updateLastUpdated(pricingJson.last_updated || pricingJson.generated_at);
+    setStatus("");
+  } catch (error) {
+    console.error("Failed to load pricing data", error);
+    lastUpdatedEl.textContent = "Unable to load data";
+    setStatus("Unable to load pricing data right now.", { type: "error" });
+    return;
+  }
+
+  try {
+    const diffJson = await fetchJson("data/diffs/latest.json");
     renderChanges(diffJson);
   } catch (error) {
-    console.error("Failed to load data", error);
-    lastUpdatedEl.textContent = "Unable to load data";
+    console.error("Failed to load changes feed", error);
+    changesList.innerHTML = "";
+    changesEmpty.textContent = "Unable to load recent change history.";
+    changesEmpty.hidden = false;
+    setStatus(
+      "Pricing data loaded, but the changes feed is temporarily unavailable.",
+      { type: "error" }
+    );
   }
 }
 
