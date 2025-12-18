@@ -122,35 +122,21 @@ function buildTabulator(rows) {
     placeholder: 'No pricing data available',
     height: '650px',
     columns: [
-      { title: 'Provider', field: 'provider', width: 140 },
-      { title: 'Model', field: 'model', minWidth: 200 },
+      { title: 'Provider', field: 'provider', width: 160 },
+      { title: 'Model', field: 'model', minWidth: 240 },
       {
-        title: 'Usage',
-        field: 'usage_type',
-        width: 120,
-        formatter: (cell) => {
-          const val = cell.getValue();
-          return val ? val.charAt(0).toUpperCase() + val.slice(1) : '';
-        },
-      },
-      { title: 'Unit', field: 'unit', width: 140 },
-      {
-        title: 'Price',
-        field: 'price',
+        title: 'Input tokens',
+        field: 'input_price',
         hozAlign: 'right',
-        width: 140,
+        width: 160,
         formatter: (cell) => formatPrice(cell.getValue(), cell.getRow().getData().currency),
       },
-      { title: 'Currency', field: 'currency', width: 100 },
       {
-        title: 'Source',
-        field: 'source',
-        headerSort: false,
-        width: 120,
-        formatter: (cell) => {
-          const url = cell.getValue();
-          return url ? `<a href="${url}" target="_blank" rel="noreferrer">Pricing</a>` : '';
-        },
+        title: 'Output tokens',
+        field: 'output_price',
+        hozAlign: 'right',
+        width: 160,
+        formatter: (cell) => formatPrice(cell.getValue(), cell.getRow().getData().currency),
       },
     ],
   });
@@ -161,7 +147,6 @@ function buildTabulator(rows) {
 function setupFilters(table, rows) {
   const providerSelect = document.getElementById('provider-filter');
   const modelSelect = document.getElementById('model-filter');
-  const usageSelect = document.getElementById('usage-filter');
   const searchInput = document.getElementById('search-filter');
 
   const providers = Array.from(new Set(rows.map((r) => r.provider))).sort();
@@ -173,7 +158,6 @@ function setupFilters(table, rows) {
   const filterState = {
     provider: '',
     model: '',
-    usage: '',
     search: '',
   };
 
@@ -181,11 +165,10 @@ function setupFilters(table, rows) {
     table.setFilter((data) => {
       if (filterState.provider && data.provider !== filterState.provider) return false;
       if (filterState.model && data.model !== filterState.model) return false;
-      if (filterState.usage && data.usage_type !== filterState.usage) return false;
 
       if (filterState.search) {
         const term = filterState.search;
-        const haystack = `${data.provider} ${data.model} ${data.unit} ${data.usage_type}`.toLowerCase();
+        const haystack = `${data.provider} ${data.model} ${data.input_price ?? ''} ${data.output_price ?? ''}`.toLowerCase();
         if (!haystack.includes(term)) return false;
       }
       return true;
@@ -202,15 +185,39 @@ function setupFilters(table, rows) {
     applyFilters();
   });
 
-  usageSelect.addEventListener('change', (e) => {
-    filterState.usage = e.target.value;
-    applyFilters();
-  });
-
   searchInput.addEventListener('input', (e) => {
     filterState.search = e.target.value.toLowerCase();
     applyFilters();
   });
+}
+
+function combineUsageRows(rows) {
+  const grouped = new Map();
+
+  rows.forEach((row) => {
+    const key = `${row.provider}||${row.model}`;
+    const existing = grouped.get(key) || {
+      provider: row.provider,
+      model: row.model,
+      currency: row.currency,
+      source: row.source,
+      unit: row.unit,
+    };
+
+    if (row.usage_type === 'input') {
+      existing.input_price = row.price;
+    } else if (row.usage_type === 'output') {
+      existing.output_price = row.price;
+    }
+
+    if (!existing.source && row.source) existing.source = row.source;
+    if (!existing.unit && row.unit) existing.unit = row.unit;
+    if (!existing.currency && row.currency) existing.currency = row.currency;
+
+    grouped.set(key, existing);
+  });
+
+  return Array.from(grouped.values());
 }
 
 async function bootstrap() {
@@ -229,7 +236,7 @@ async function bootstrap() {
       diffPromise,
     ]);
 
-    const rows = priceData?.rows || [];
+    const rows = combineUsageRows(priceData?.rows || []);
     const table = buildTabulator(rows);
     setupFilters(table, rows);
 
