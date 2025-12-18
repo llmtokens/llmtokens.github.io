@@ -1,9 +1,9 @@
 :root {
-  --bg: #0f172a;
-  --card: #111827;
-  --text: #e5e7eb;
-  --accent: #38bdf8;
+  --bg: #0b1220;
+  --panel: #0f172a;
+  --text: #e2e8f0;
   --muted: #94a3b8;
+  --accent: #38bdf8;
   --border: #1f2937;
 }
 
@@ -12,23 +12,33 @@
 }
 
 body {
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   margin: 0;
-  padding: 0;
-  background: var(--bg);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.07), transparent 30%),
+    radial-gradient(circle at 80% 0%, rgba(52, 211, 153, 0.07), transparent 25%),
+    var(--bg);
   color: var(--text);
+  min-height: 100vh;
 }
 
 header,
 main,
 footer {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 1.5rem;
 }
 
+header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
 header h1 {
-  margin: 0 0 0.25rem;
+  margin: 0 0 0.35rem;
+  font-size: clamp(1.8rem, 3vw, 2.3rem);
 }
 
 header .tagline {
@@ -36,52 +46,123 @@ header .tagline {
   color: var(--muted);
 }
 
+.last-updated {
+  color: var(--muted);
+  margin: 0 0 0.4rem;
+}
+
+.status {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  min-width: 180px;
+  text-align: right;
+  color: var(--muted);
+  font-weight: 600;
+}
+
 .filters {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: 0.9rem;
   margin-bottom: 1rem;
+}
+
+.filters .field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.filters label {
+  color: var(--muted);
+  font-size: 0.95rem;
 }
 
 .filters input,
 .filters select {
-  padding: 0.35rem 0.75rem;
-  border-radius: 0.4rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.6rem;
   border: 1px solid var(--border);
-  background: var(--card);
+  background: #0d1526;
   color: var(--text);
 }
 
-#prices-table {
-  width: 100%;
-  border-collapse: collapse;
-  background: var(--card);
+.tabulator-table {
+  background: var(--panel);
+  border-radius: 0.9rem;
   border: 1px solid var(--border);
-  border-radius: 0.5rem;
   overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
 }
 
-#prices-table th,
-#prices-table td {
-  text-align: left;
-  padding: 0.75rem 1rem;
+.tabulator .tabulator-header {
+  background: #0c1424;
+  color: var(--muted);
   border-bottom: 1px solid var(--border);
 }
 
-#prices-table thead {
-  background: #111927;
+.tabulator .tabulator-row {
+  background: transparent;
 }
 
-#prices-table tbody tr:nth-child(odd) {
-  background: #0b1220;
+.tabulator .tabulator-row:nth-child(odd) {
+  background: rgba(255, 255, 255, 0.015);
 }
 
-#prices-table a {
+.tabulator .tabulator-row:hover {
+  background: rgba(56, 189, 248, 0.05);
+}
+
+.tabulator a {
   color: var(--accent);
+}
+
+.changes {
+  margin-top: 1.25rem;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  padding: 1rem 1.2rem;
+}
+
+.changes h2 {
+  margin: 0 0 0.75rem;
+}
+
+#changes-updated {
+  margin: 0 0 0.5rem;
+}
+
+.change-group + .change-group {
+  margin-top: 1rem;
+}
+
+.change-list {
+  padding-left: 1.2rem;
+  margin: 0.25rem 0 0;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.muted {
+  color: var(--muted);
 }
 
 footer {
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   border-top: 1px solid var(--border);
+  margin-top: 1.5rem;
+}
+
+footer .disclaimer {
+  margin-top: 0;
+  color: var(--text);
+  font-weight: 600;
 }
