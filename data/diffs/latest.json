@@ -1,0 +1,27 @@
+{
+  "generated_at": "2025-12-18T21:29:24.347698Z",
+  "added": [
+    {
+      "provider": "openai",
+      "model": "o3-mini",
+      "usage_type": "input",
+      "unit": "1M tokens",
+      "price": 0.2,
+      "currency": "USD",
+      "source": "https://openai.com/api/pricing"
+    }
+  ],
+  "updated": [
+    {
+      "provider": "anthropic",
+      "model": "claude-3.5-sonnet",
+      "usage_type": "output",
+      "unit": "1M tokens",
+      "old_price": 15.0,
+      "new_price": 12.0,
+      "currency": "USD",
+      "source": "https://www.anthropic.com/pricing"
+    }
+  ],
+  "removed": []
+}
