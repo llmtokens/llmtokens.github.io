@@ -1,0 +1,167 @@
+{
+  "generated_at": "2025-12-18T21:29:24.347698Z",
+  "rows": [
+    {
+      "provider": "openai",
+      "model": "gpt-4o",
+      "usage_type": "input",
+      "unit": "1M tokens",
+      "price": 5.0,
+      "currency": "USD",
+      "source": "https://openai.com/api/pricing"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-4o",
+      "usage_type": "output",
+      "unit": "1M tokens",
+      "price": 15.0,
+      "currency": "USD",
+      "source": "https://openai.com/api/pricing"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "usage_type": "input",
+      "unit": "1M tokens",
+      "price": 0.15,
+      "currency": "USD",
+      "source": "https://openai.com/api/pricing"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-4o-mini",
+      "usage_type": "output",
+      "unit": "1M tokens",
+      "price": 0.6,
+      "currency": "USD",
+      "source": "https://openai.com/api/pricing"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-4.1",
+      "usage_type": "input",
+      "unit": "1M tokens",
+      "price": 5.0,
+      "currency": "USD",
+      "source": "https://openai.com/api/pricing"
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-4.1",
+      "usage_type": "output",
+      "unit": "1M tokens",
+      "price": 15.0,
+      "currency": "USD",
+      "source": "https://openai.com/api/pricing"
+    },
+    {
+      "provider": "openai",
+      "model": "o1-mini",
+      "usage_type": "input",
+      "unit": "1M tokens",
+      "price": 3.0,
+      "currency": "USD",
+      "source": "https://openai.com/api/pricing"
+    },
+    {
+      "provider": "openai",
+      "model": "o1-mini",
+      "usage_type": "output",
+      "unit": "1M tokens",
+      "price": 12.0,
+      "currency": "USD",
+      "source": "https://openai.com/api/pricing"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-3-opus",
+      "usage_type": "input",
+      "unit": "1M tokens",
+      "price": 15.0,
+      "currency": "USD",
+      "source": "https://www.anthropic.com/pricing"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-3-opus",
+      "usage_type": "output",
+      "unit": "1M tokens",
+      "price": 75.0,
+      "currency": "USD",
+      "source": "https://www.anthropic.com/pricing"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-3.5-sonnet",
+      "usage_type": "input",
+      "unit": "1M tokens",
+      "price": 3.0,
+      "currency": "USD",
+      "source": "https://www.anthropic.com/pricing"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-3.5-sonnet",
+      "usage_type": "output",
+      "unit": "1M tokens",
+      "price": 15.0,
+      "currency": "USD",
+      "source": "https://www.anthropic.com/pricing"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-3-haiku",
+      "usage_type": "input",
+      "unit": "1M tokens",
+      "price": 0.25,
+      "currency": "USD",
+      "source": "https://www.anthropic.com/pricing"
+    },
+    {
+      "provider": "anthropic",
+      "model": "claude-3-haiku",
+      "usage_type": "output",
+      "unit": "1M tokens",
+      "price": 1.25,
+      "currency": "USD",
+      "source": "https://www.anthropic.com/pricing"
+    },
+    {
+      "provider": "gemini",
+      "model": "gemini-1.5-pro",
+      "usage_type": "input",
+      "unit": "1M tokens",
+      "price": 7.0,
+      "currency": "USD",
+      "source": "https://ai.google.dev/pricing"
+    },
+    {
+      "provider": "gemini",
+      "model": "gemini-1.5-pro",
+      "usage_type": "output",
+      "unit": "1M tokens",
+      "price": 21.0,
+      "currency": "USD",
+      "source": "https://ai.google.dev/pricing"
+    },
+    {
+      "provider": "gemini",
+      "model": "gemini-1.5-flash",
+      "usage_type": "input",
+      "unit": "1M tokens",
+      "price": 0.35,
+      "currency": "USD",
+      "source": "https://ai.google.dev/pricing"
+    },
+    {
+      "provider": "gemini",
+      "model": "gemini-1.5-flash",
+      "usage_type": "output",
+      "unit": "1M tokens",
+      "price": 1.05,
+      "currency": "USD",
+      "source": "https://ai.google.dev/pricing"
+    }
+  ]
+}
