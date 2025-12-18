@@ -21,7 +21,7 @@
     <section class="filters" aria-label="Filters">
       <div class="field">
         <label for="search-filter">Search</label>
-        <input id="search-filter" type="search" placeholder="Search providers, models, or units" />
+        <input id="search-filter" type="search" placeholder="Search providers or models" />
       </div>
       <div class="field">
         <label for="provider-filter">Provider</label>
@@ -31,17 +31,10 @@
         <label for="model-filter">Model</label>
         <select id="model-filter"></select>
       </div>
-      <div class="field">
-        <label for="usage-filter">Usage</label>
-        <select id="usage-filter">
-          <option value="">All</option>
-          <option value="input">Input</option>
-          <option value="output">Output</option>
-        </select>
-      </div>
     </section>
 
     <section aria-label="Pricing table">
+      <p class="muted pricing-note">All prices are shown in USD per 1M tokens.</p>
       <div id="prices-table" class="tabulator-table"></div>
     </section>
 
